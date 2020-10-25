@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS departmentsDB;
-CREATE database departmentsDB;
+DROP DATABASE IF EXISTS trackerDB;
+CREATE database trackerDB;
 
-USE departmentsDB;
+USE trackerDB;
 
 CREATE TABLE departmentsTable (
   id INT NOT NULL,
