@@ -135,34 +135,40 @@ function showAddOptions() {
         .then(function (answer) {
             if (answer.addAction === "Add an employee") {
                 inquirer.prompt(addEmployeeQuestion)
-                .then(function(answer) {
-                    // when finished prompting, insert a new item into the db with that info
-                    // connection.query(
-                    //   "INSERT INTO auctions SET ?",
-                    //   {
-                    //     first_name: answer.fname,
-                    //     last_name: answer.lname,
-                    //     starting_bid: answer.startingBid || 0,
-                    //     highest_bid: answer.startingBid || 0
-                    //   },
-                  });
+                    .then(function (answer) {
+                        // when finished prompting, insert a new item into the db with that info
+                        // connection.query(
+                        //   "INSERT INTO auctions SET ?",
+                        //   {
+                        //     first_name: answer.fname,
+                        //     last_name: answer.lname,
+                        //     starting_bid: answer.startingBid || 0,
+                        //     highest_bid: answer.startingBid || 0
+                        //   },
+                    });
             }
             else if (answer.addAction === "Add a role to a department") {
-                
+
                 start();
             }
             else if (answer.addAction === "Add a department") {
-                var query = "SELECT dept_name FROM departmentsTable AS \"Departments\"";
-                connection.query(query, function(err, res) {
-                    if (err) throw err;
-                    console.table(res);
-                });
-            }
-            else {
+                inquirer.prompt({
+                    name: "addDept",
+                    type: "inpt",
+                    message: "What is the department name?",
+                }).then(function (answer) {
+                    var query = "INSERT INTO departmentsTable (dept_name) VALUES ?";
+                    connection.query(query, answer, function (err, res) {
+                        if (err) throw err;
+                        console.table(res);
+                    })
+                })
+                start();
+            } else {
                 connection.end();
                 console.log("Connection has ended")
             }
-        });
+        })
 }
 function showUpdateOptions() {
     inquirer
